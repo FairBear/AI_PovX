@@ -11,23 +11,13 @@ namespace AI_PovX
 	{
 		const string GUID = "com.2155x.fairbair.ai_povx";
 		const string Name = "AI PoV X";
-		const string Version = "1.0.0";
+		const string Version = "1.0.1";
 
 		const string SECTION_GENERAL = "General";
 		const string SECTION_CAMERA = "Camera";
 		const string SECTION_ANIMATION = "Animation";
+		const string SECTION_HOTKEYS = "Hotkeys";
 
-		const string DESCRIPTION_CHARA_CYCLE_KEY =
-			"Switch between characters during PoV mode. " +
-			"Only applies during H scene.";
-		const string DESCRIPTION_CAMERA_DRAG_KEY =
-			"The key to hold down in order to move the camera if the mouse isn't locked.";
-		const string DESCRIPTION_CURSOR_RELEASE_KEY =
-			"Holding down this key will show the cursor when hidden.";
-		const string DESCRIPTION_HIDE_HEAD =
-			"Should the head be invisible when in PoV mode? " +
-			"Head is always invisible during H scenes or " +
-			"situations where the player can't move.";
 		const string DESCRIPTION_REVEAL_ALL =
 			"Should all the girls (including the merchant) be visible at all times? " +
 			"Also applies outside of PoV mode. " +
@@ -62,11 +52,19 @@ namespace AI_PovX
 			"The farthest the head can rotate until the body would rotate. " +
 			"Only applies with free roam camera and the player isn't moving.";
 
-		internal static ConfigEntry<KeyboardShortcut> PovKey { get; set; }
-		internal static ConfigEntry<KeyboardShortcut> CharaCycleKey { get; set; }
-		internal static ConfigEntry<KeyboardShortcut> CameraDragKey { get; set; }
-		internal static ConfigEntry<KeyboardShortcut> CursorReleaseKey { get; set; }
-		internal static ConfigEntry<KeyboardShortcut> ZoomKey { get; set; }
+		const string DESCRIPTION_CHARA_CYCLE_KEY =
+			"Switch between characters during PoV mode. " +
+			"Only applies during H scene.";
+		const string DESCRIPTION_CAMERA_DRAG_KEY =
+			"During PoV mode, holding down this key will move the camera if the mouse isn't locked.";
+		const string DESCRIPTION_CURSOR_RELEASE_KEY =
+			"Pressing this key will force the cursor to be revealed in any scenes. " +
+			"Press the key again to turn off.";
+		const string DESCRIPTION_HIDE_HEAD =
+			"Should the head be invisible when in PoV mode? " +
+			"Head is always invisible during H scenes or " +
+			"situations where the player can't move.";
+
 		internal static ConfigEntry<bool> HideHead { get; set; }
 		internal static ConfigEntry<bool> RevealAll { get; set; }
 		internal static ConfigEntry<bool> HSceneLockCursor { get; set; }
@@ -86,13 +84,14 @@ namespace AI_PovX
 		internal static ConfigEntry<float> NeckMax { get; set; }
 		internal static ConfigEntry<float> HeadMax { get; set; }
 
+		internal static ConfigEntry<KeyboardShortcut> PovKey { get; set; }
+		internal static ConfigEntry<KeyboardShortcut> CharaCycleKey { get; set; }
+		internal static ConfigEntry<KeyboardShortcut> CameraDragKey { get; set; }
+		internal static ConfigEntry<KeyboardShortcut> CursorReleaseKey { get; set; }
+		internal static ConfigEntry<KeyboardShortcut> ZoomKey { get; set; }
+
 		private void Awake()
 		{
-			PovKey = Config.AddSetting(SECTION_GENERAL, "PoV Toggle Key", new KeyboardShortcut(KeyCode.Comma));
-			CharaCycleKey = Config.AddSetting(SECTION_GENERAL, "Character Cycle Key", new KeyboardShortcut(KeyCode.Period), DESCRIPTION_CHARA_CYCLE_KEY);
-			CameraDragKey = Config.AddSetting(SECTION_GENERAL, "Camera Drag Key", new KeyboardShortcut(KeyCode.Mouse0), DESCRIPTION_CAMERA_DRAG_KEY);
-			CursorReleaseKey = Config.AddSetting(SECTION_GENERAL, "Cursor Release Key", new KeyboardShortcut(KeyCode.LeftControl), DESCRIPTION_CURSOR_RELEASE_KEY);
-			ZoomKey = Config.AddSetting(SECTION_GENERAL, "Zoom Key", new KeyboardShortcut(KeyCode.Z));
 			HideHead = Config.AddSetting(SECTION_GENERAL, "Hide Head", false, DESCRIPTION_HIDE_HEAD);
 			RevealAll = Config.AddSetting(SECTION_GENERAL, "Reveal All Girls", true, DESCRIPTION_REVEAL_ALL);
 			HSceneLockCursor = Config.AddSetting(SECTION_GENERAL, "Lock Cursor During H Scenes", false, DESCRIPTION_H_SCENE_LOCK_CURSOR);
@@ -111,6 +110,12 @@ namespace AI_PovX
 			NeckMin = Config.AddSetting(SECTION_ANIMATION, "Min Neck Angle X", 0f, DESCRIPTION_NECK_MIN);
 			NeckMax = Config.AddSetting(SECTION_ANIMATION, "Max Neck Angle X", 90f, DESCRIPTION_NECK_MAX);
 			HeadMax = Config.AddSetting(SECTION_ANIMATION, "Max Head Angle Y", 60f, DESCRIPTION_HEAD_MAX);
+
+			PovKey = Config.AddSetting(SECTION_HOTKEYS, "PoV Toggle Key", new KeyboardShortcut(KeyCode.Comma));
+			CharaCycleKey = Config.AddSetting(SECTION_HOTKEYS, "Character Cycle Key", new KeyboardShortcut(KeyCode.Period), DESCRIPTION_CHARA_CYCLE_KEY);
+			CameraDragKey = Config.AddSetting(SECTION_HOTKEYS, "Camera Drag Key", new KeyboardShortcut(KeyCode.Mouse0), DESCRIPTION_CAMERA_DRAG_KEY);
+			CursorReleaseKey = Config.AddSetting(SECTION_HOTKEYS, "Cursor Release Key", new KeyboardShortcut(KeyCode.LeftControl), DESCRIPTION_CURSOR_RELEASE_KEY);
+			ZoomKey = Config.AddSetting(SECTION_HOTKEYS, "Zoom Key", new KeyboardShortcut(KeyCode.Z));
 
 			HideHead.SettingChanged += (sender, args) =>
 			{

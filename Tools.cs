@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace AI_PovX
 {
-	static class Tools
+	public static class Tools
 	{
 		public static bool IsHScene()
 		{

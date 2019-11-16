@@ -9,6 +9,7 @@ namespace AI_PovX
 	public static class Controller
 	{
 		public static bool toggled = false;
+		public static bool showCursor = false;
 
 		public static Quaternion bodyQuaternion;
 		public static float bodyAngle = 0f; // Actual body, not the camera.
@@ -65,6 +66,9 @@ namespace AI_PovX
 			if (AI_PovX.PovKey.Value.IsDown())
 				TogglePoV(!toggled);
 
+			if (AI_PovX.CursorReleaseKey.Value.IsDown())
+				showCursor = !showCursor;
+
 			if (!toggled)
 				return;
 
@@ -120,8 +124,6 @@ namespace AI_PovX
 
 		public static void LateUpdate()
 		{
-			bool showCursor = AI_PovX.CursorReleaseKey.Value.IsPressed();
-
 			if (toggled)
 			{
 				bool hScene = Tools.IsHScene();
@@ -178,6 +180,16 @@ namespace AI_PovX
 				Map.Instance.Player.ChaControl :
 				HSceneManager.Instance.females[focus - 1]?.ChaControl;
 		}
+
+		/*public static void Stare(ChaControl target, ChaControl looker)
+		{
+			Vector3 target_pos = target.objHeadBone.transform.position;
+			Vector3 looker_pos = looker.objHeadBone.transform.position;
+			Vector3 looker_dir = looker.objBodyBone.transform.forward;
+
+			if (Vector3.Angle(target_pos - looker_pos, looker_dir) <= AI_PovX.LookMaxRange.Value)
+				looker.neckLookCtrl.neckLookScript.aBones[0].neckBone.LookAt(target_pos);
+		}*/
 
 		public static void SetCamera(Transform neck)
 		{
