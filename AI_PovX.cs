@@ -11,7 +11,7 @@ namespace AI_PovX
 	{
 		const string GUID = "com.2155x.fairbair.ai_povx";
 		const string Name = "AI PoV X";
-		const string Version = "1.0.1";
+		const string Version = "1.0.2";
 
 		const string SECTION_GENERAL = "General";
 		const string SECTION_CAMERA = "Camera";
@@ -92,6 +92,9 @@ namespace AI_PovX
 
 		private void Awake()
 		{
+			if (!Tools.IsMainGame())
+				return;
+
 			HideHead = Config.AddSetting(SECTION_GENERAL, "Hide Head", false, DESCRIPTION_HIDE_HEAD);
 			RevealAll = Config.AddSetting(SECTION_GENERAL, "Reveal All Girls", true, DESCRIPTION_REVEAL_ALL);
 			HSceneLockCursor = Config.AddSetting(SECTION_GENERAL, "Lock Cursor During H Scenes", false, DESCRIPTION_H_SCENE_LOCK_CURSOR);
@@ -136,7 +139,8 @@ namespace AI_PovX
 
 		private void Update()
 		{
-			if (!Map.IsInstance() ||
+			if (!Tools.IsMainGame() ||
+				!Map.IsInstance() ||
 				Map.Instance.Player == null ||
 				Manager.Housing.Instance.IsCraft ||
 				Time.timeScale == 0)
@@ -147,7 +151,8 @@ namespace AI_PovX
 
 		private void LateUpdate()
 		{
-			if (!Map.IsInstance() ||
+			if (!Tools.IsMainGame() ||
+				!Map.IsInstance() ||
 				Map.Instance.Player == null ||
 				Manager.Housing.Instance.IsCraft ||
 				Time.timeScale == 0)

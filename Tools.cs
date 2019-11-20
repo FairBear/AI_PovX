@@ -7,6 +7,11 @@ namespace AI_PovX
 {
 	public static class Tools
 	{
+		public static bool IsMainGame()
+		{
+			return Application.productName == "AI-Syoujyo";
+		}
+
 		public static bool IsHScene()
 		{
 			return Map.Instance.Player.CameraControl.Mode == CameraMode.H;
