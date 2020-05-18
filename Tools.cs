@@ -9,7 +9,7 @@ namespace AI_PovX
 	{
 		public static bool IsMainGame()
 		{
-			return Application.productName == "AI-Syoujyo";
+			return BepInEx.Paths.ProcessName == "AI-Syoujyo";
 		}
 
 		public static bool IsHScene()
