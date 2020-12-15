@@ -108,6 +108,8 @@ namespace AI_PovX
 				sensitivity *= AI_PovX.ZoomFov.Value / AI_PovX.Fov.Value;
 
 			float x = UnityEngine.Input.GetAxis("Mouse Y") * sensitivity;
+			if (AI_PovX.CameraInvertYAxis.Value)
+				x *= -1;
 			float y = UnityEngine.Input.GetAxis("Mouse X") * sensitivity;
 
 			if (Cursor.lockState != CursorLockMode.None || AI_PovX.CameraDragKey.Value.IsPressed())
